@@ -25,3 +25,5 @@ urlpatterns = [
     path('send-email/', views.send_email, name='send_email'),
     path('track-open/', views.track_open, name='track_open'),
 ]
+
+

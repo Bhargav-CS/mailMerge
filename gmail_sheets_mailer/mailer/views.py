@@ -38,23 +38,12 @@ def send_email_with_tracking(service):
         body_text = "This is an automated draft mail with a tracking pixel."
 
         # Add tracking pixel URL in the email body
-        tracking_url = f'https://0e63-2409-40c4-e8-8554-f075-c637-7feb-6aa5.ngrok-free.app/track-open?email={recipient}'
-        # email_body_with_pixel = f'{body_text}<br><img src="{tracking_url}" width="100" height="100">'
+        tracking_url = f'https://744c-2409-40c4-ea-2e14-8c66-1b52-a5fe-1819.ngrok-free.app/track-open?email={recipient}'
+        email_body_with_pixel = f'{body_text}<br><img src="{tracking_url}" width="100" height="100">'
         
-        
-        tracking_url = f'https://0e63-2409-40c4-e8-8554-f075-c637-7feb-6aa5.ngrok-free.app/track-open?email={recipient}'
-        html_body = f"""
-        <html>
-        <body>
-            <p>This is an automated draft mail with a tracking pixel.</p>
-            <img src="{tracking_url}" width="100" height="100" />
-        </body>
-        </html>
-        
-        """       
 
         # Set the email content to HTML
-        message.set_content(html_body,'html')
+        message.set_content(email_body_with_pixel, subtype ='html')
 
         message["To"] = recipient
         message["From"] = sender
@@ -87,7 +76,7 @@ def track_open(request):
     
     print(f"Email opened by: {email}")
     
-    image_path = os.path.join(os.path.dirname(__file__), 'My_profile_DC.jpg')
+    image_path = os.path.join(os.path.dirname(__file__), 'atomic_habits.png')
 
     with open(image_path, 'rb') as image_file:
         image_data = image_file.read()
@@ -126,7 +115,5 @@ def send_email(request):
         
     except Exception as e:
         return HttpResponse(f"An error occurred: {e}")
-    
-    
     
     
