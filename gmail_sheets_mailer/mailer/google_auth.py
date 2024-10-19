@@ -14,7 +14,7 @@ def authenticate(credentials_path, token_path, scopes=SCOPES):
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes)
-            creds = flow.run_local_server(port=0)
+            creds = flow.run_console()
         with open(token_path, 'w') as token:
             token.write(creds.to_json())
     return creds

@@ -135,7 +135,7 @@ def google_auth(request):
 
             # Perform OAuth flow
             flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes)
-            creds = flow.run_local_server(port=3000)
+            creds = flow.run_console()
 
             # Save the credentials for future use
             token_path = 'token.json'
