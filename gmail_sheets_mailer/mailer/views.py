@@ -12,7 +12,7 @@ from google.oauth2.credentials import Credentials
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the mailer index.")
+    return HttpResponse("welcome. You're at the mailer index.")
 
 def test_auth(request):
     creds = authenticate()
