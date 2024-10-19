@@ -24,6 +24,7 @@ urlpatterns = [
     path('test_auth/', views.test_auth, name='test_auth'),
     path('send-email/', views.send_email, name='send_email'),
     path('track-open/', views.track_open, name='track_open'),
+    path('google-auth/', views.google_auth, name='google_auth'),
 ]
 
 

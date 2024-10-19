@@ -7,6 +7,8 @@ import base64
 from email.message import EmailMessage
 from googleapiclient.errors import HttpError
 from google.oauth2.credentials import Credentials
+from .forms import GoogleAuthForm
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 # Create your views here.
@@ -118,3 +120,34 @@ def send_email(request):
         return HttpResponse(f"An error occurred: {e}")
     
     
+def google_auth(request):
+    if request.method == 'POST':
+        form = GoogleAuthForm(request.POST, request.FILES)
+        if form.is_valid():
+            credentials_file = request.FILES['credentials_file']
+            scopes = form.cleaned_data['scopes'].split(',')
+
+            # Save the uploaded credentials file temporarily
+            credentials_path = 'temp_credentials.json'
+            with open(credentials_path, 'wb') as f:
+                for chunk in credentials_file.chunks():
+                    f.write(chunk)
+
+            # Perform OAuth flow
+            flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes)
+            creds = flow.run_local_server(port=3000)
+
+            # Save the credentials for future use
+            token_path = 'token.json'
+            with open(token_path, 'w') as token:
+                token.write(creds.to_json())
+
+            # Clean up temporary credentials file
+            os.remove(credentials_path)
+
+            return HttpResponse("Google authentication successful")
+    else:
+        form = GoogleAuthForm()
+
+    return render(request, 'google_auth.html', {'form': form})
+
