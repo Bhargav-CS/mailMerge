@@ -25,6 +25,7 @@ urlpatterns = [
     path('send-email/', views.send_email, name='send_email'),
     path('track-open/', views.track_open, name='track_open'),
     path('google-auth/', views.google_auth, name='google_auth'),
+    path('oauth2callback/', views.oauth2callback, name='oauth2callback'),
 ]
 
 

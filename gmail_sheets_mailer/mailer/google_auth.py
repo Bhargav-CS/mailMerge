@@ -5,7 +5,7 @@ from google.auth.transport.requests import Request
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
-def authenticate(credentials_path, token_path, scopes=SCOPES):
+def authenticate(credentials_path, token_path, redirect_uri, scopes=SCOPES):
     creds = None
     if os.path.exists(token_path):
         creds = Credentials.from_authorized_user_file(token_path, scopes)
@@ -14,7 +14,8 @@ def authenticate(credentials_path, token_path, scopes=SCOPES):
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes)
-            creds = flow.run_console()
+            flow.redirect_uri = redirect_uri
+            creds = flow.run_local_server(port=3000)
         with open(token_path, 'w') as token:
             token.write(creds.to_json())
     return creds
